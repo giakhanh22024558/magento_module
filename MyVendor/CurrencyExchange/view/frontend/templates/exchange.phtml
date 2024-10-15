@@ -1,0 +1,23 @@
+<?php
+$rates = $block->getExchangeRates();
+?>
+
+<h2>Exchange Rates</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Currency</th>
+            <th>Buy Rate</th>
+            <th>Sell Rate</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($rates as $currency => $rate): ?>
+            <tr>
+                <td><?= $currency ?></td>
+                <td><?= $rate['buy'] ?></td>
+                <td><?= $rate['sell'] ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
