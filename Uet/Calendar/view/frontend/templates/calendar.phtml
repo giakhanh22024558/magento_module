@@ -1,0 +1,13 @@
+<h1>This is where calendar shown!</h1>
+<?php
+/** @var \Uet\Calendar\Block\Occasions $block */
+$occasions = $block->getOccasions();
+?>
+<h1>Occasions</h1>
+<ul>
+    <?php foreach ($occasions as $occasion): ?>
+        <li>
+            <?= $occasion->getData('occasion') ?> - <?= $occasion->getData('date') ?>
+        </li>
+    <?php endforeach; ?>
+</ul>

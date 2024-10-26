@@ -1,25 +1,21 @@
 <?php
+namespace Uet\Calendar\Controller\Index;
 
-namespace Uet\CurrencyExchange\Controller\Index;
-
-use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
 
-class Index extends Action
+class Index extends \Magento\Framework\App\Action\Action
 {
     protected $resultPageFactory;
 
-    public function __construct(
-        Context $context,
-        PageFactory $resultPageFactory
-    ) {
-        parent::__construct($context);
+    public function __construct(Context $context, PageFactory $resultPageFactory)
+    {
         $this->resultPageFactory = $resultPageFactory;
+        parent::__construct($context);
     }
 
     public function execute()
-    {   
+    {      
         return $this->resultPageFactory->create();
     }
 }

@@ -11,5 +11,5 @@ interface RecommendationInterface
      * @param int $limit
      * @return \Magento\Catalog\Api\Data\ProductInterface[]
      */
-    public function getRecommendations($userId = null, $budget = null);
+    public function getRecommendations($userId = null, $budget = null, $interval = 3);
 }
