@@ -21,7 +21,9 @@ class Calendars extends Template
     {   
         $calendar = $this->calendarFactory->create();
         $collection = $calendar->getCollection();
+        //dd($collection->getItems());
         return $collection->getItems();
     }
+    
 
 }
