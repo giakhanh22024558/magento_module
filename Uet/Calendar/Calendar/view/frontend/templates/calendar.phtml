@@ -1,0 +1,63 @@
+<h1>This is where calendar shown!</h1>
+<?php
+/** @var \Uet\Calendar\Block\Occasions $block */
+$occasions = $block->getOccasions();
+$categories = $block->getCategories();
+?>
+<h1>Occasions</h1>
+<ul>
+    <?php foreach ($occasions as $occasion): ?>
+        <li>
+            <?= $occasion->getData('occasion') ?> - <?= $occasion->getData('date') ?> <br>
+            <?= $occasion->getData('note') ? $occasion->getData('note') : 'No additional notes available.' ?>
+            <form action="<?= $block->getUrl('calendar/action/destroy') ?>" method="post" style="display:inline;">
+                <input type="hidden" name="form_key" value="<?= $block->getFormKey() ?>">
+                <input type="hidden" name="id" value="<?= $occasion->getData('id') ?>">
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this occasion?');">Delete</button>
+            </form>
+            <button type="button" onclick="populateForm('<?= $occasion->getData('id') ?>', '<?= $occasion->getData('occasion') ?>', '<?= $occasion->getData('date') ?>', '<?= $occasion->getData('note') ?>')">Update</button>
+        </li>
+    <?php endforeach; ?>
+</ul>
+
+<form id="occasion-form" action="<?= $block->getUrl('calendar/action/save') ?>" method="post">
+    <input type="hidden" name="form_key" value="<?= $block->getFormKey() ?>">
+    <input id="occasion-id" type="hidden" name="id">
+    <div>
+        <label for="name">Occasion:</label>
+        <select name="occasion" id="occasion" required>
+            <?php foreach ($categories as $category): ?>
+                <option value="<?= $category['name'] ?>"><?= $category['name'] ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <div>
+        <label for="date">Date:</label>
+        <input type="date" name="date" id="date" required>
+    </div>
+    <div>
+        <label for="note">Note:</label>
+        <input type="text" name="note" id="note" required>
+    </div>
+    <div>
+        <button type="submit">Save Occasion</button>
+    </div>
+</form>
+<div id="occasion-message"></div>
+
+<script type="text/javascript">
+    function populateForm(id, occasion, date, note) {
+        var selectElement = document.getElementById('occasion');
+        console.log(id + ' - ' + occasion + ' - ' + date + ' - ' + note);
+        document.getElementById('occasion-id').value = id;
+        for (var i = 0; i < selectElement.options.length; i++) {
+            if (selectElement.options[i].value === occasion) {
+            // Set the matched option as selected
+            selectElement.selectedIndex = i;
+            break;
+            }
+        }
+        document.getElementById('date').value = date;
+        document.getElementById('note').value = note;
+    }
+</script>
