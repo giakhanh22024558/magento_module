@@ -3,6 +3,7 @@
 /** @var \Uet\Calendar\Block\Occasions $block */
 $occasions = $block->getOccasions();
 $categories = $block->getCategories();
+$customer_id = $block->getCustomerId();
 ?>
 <h1>Occasions</h1>
 <ul>
@@ -23,6 +24,7 @@ $categories = $block->getCategories();
 <form id="occasion-form" action="<?= $block->getUrl('calendar/action/save') ?>" method="post">
     <input type="hidden" name="form_key" value="<?= $block->getFormKey() ?>">
     <input id="occasion-id" type="hidden" name="id">
+    <input id="customer-id" type="hidden" name="customer_id" value="<?= $customer_id ?>">
     <div>
         <label for="name">Occasion:</label>
         <select name="occasion" id="occasion" required>

@@ -6,6 +6,7 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Uet\Calendar\Model\CalendarFactory;
 use Uet\Calendar\Model\ResourceModel\Calendar as CalendarResource;
+use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\Message\ManagerInterface;
 
 class Save extends Action
@@ -13,14 +14,17 @@ class Save extends Action
     protected $calendarFactory;
     protected $messageManager;
     protected $calendarResource;
+    protected $customerSession;
 
     public function __construct(
         Context $context,
         CalendarFactory $calendarFactory,
         ManagerInterface $messageManager,
+        CustomerSession $customerSession,
         CalendarResource $calendarResource,
     ) {
         parent::__construct($context);
+        $this->customerSession = $customerSession;
         $this->calendarFactory = $calendarFactory;
         $this->messageManager = $messageManager;
         $this->calendarResource = $calendarResource;
@@ -34,6 +38,7 @@ class Save extends Action
             $occasionId = isset($data['id']) ? $data['id'] : null;
             if(!$occasionId) {
                 $getData = [
+                    'customer_id' => $data['customer_id'] ?? null,
                     'occasion' => $data['occasion'] ?? null,
                     'note' => $data['note'] ?? null,
                     'date' => $data['date'] ?? null,

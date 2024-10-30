@@ -4,27 +4,34 @@ namespace Uet\Calendar\Block;
 use Magento\Framework\View\Element\Template;
 use Uet\Calendar\Model\CalendarFactory;
 use Magento\Catalog\Model\CategoryFactory;
+use Magento\Customer\Model\SessionFactory as CustomerSession;
 
 class Calendars extends Template
 {
     // protected $calendar;
     protected $calendarFactory;
     protected $categoryFactory;
+    protected $customerSession;
 
     public function __construct(Template\Context $context,  
         CalendarFactory $calendarFactory,
+        CustomerSession $customerSession,
         CategoryFactory $categoryFactory, 
         array $data = [])
     {   
         $this->categoryFactory = $categoryFactory;
+        $this->customerSession = $customerSession;
         $this->calendarFactory = $calendarFactory;
         parent::__construct($context, $data);
     }
 
     public function getOccasions()
     {   
+        $customerId = $this->getCustomerId();
+        //dd($this->customerSession->isLoggedIn());
         $calendar = $this->calendarFactory->create();
         $collection = $calendar->getCollection();
+        $collection->addFieldToFilter('customer_id', $customerId);
         //dd($collection->getItems());
         return $collection->getItems();
     }
@@ -54,6 +61,11 @@ class Calendars extends Template
         // dd($childCategories);
 
         return $categoriesData;
+    }
+
+    public function getCustomerId(){
+        $customer = $this->customerSession->create();
+        return $customer->getCustomer()->getId();
     }
 
 }
