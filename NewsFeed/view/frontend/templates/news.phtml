@@ -1,0 +1,62 @@
+<?php
+    $newsFeed = $block->getNewsFeed();
+?>
+
+<div class="news-feed">
+    <h2>Latest Entertainment News</h2>
+    <?php if (!empty($newsFeed)): ?>
+        <div>
+            <?php foreach ($newsFeed as $newsItem): ?>
+                <div class="news-cards">
+                    <div class="image-section"><?= $newsItem['image'] ?></div>
+                    <a href="<?= $newsItem['link'] ?>" target="_blank" class="section2">
+                        <p><?= $newsItem['title'] ?></p>
+                        <p><?= $newsItem['description'] ?></p>
+                        <small>Published on: <?= date('F j, Y', strtotime($newsItem['pubDate'])) ?></small>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <p>No news available at the moment.</p>
+    <?php endif; ?>
+</div>
+
+<style>
+
+    .image-section{
+        width: 200px; /* Fixed width */
+        height: 150px; /* Fixed height */
+        overflow: hidden;
+    }
+
+    .image-section img{
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+    }
+
+    .news-feed a {
+        text-decoration: none;
+        color: inherit;
+        font: inherit;
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .news-cards{
+        display: flex;
+        shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        border: 1px solid #e0e0e0;
+        gap: 2px;
+        margin-bottom: 10px;
+    }
+
+    .section2{
+        display: flex;
+        flex-direction: column;
+    }
+
+</style>

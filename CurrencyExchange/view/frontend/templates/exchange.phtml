@@ -1,0 +1,48 @@
+<?php
+$data = $block->getExchangeRates();
+?>
+
+<h2>Exchange Rates</h2>
+<?php if (!empty($data['rates'])): ?>
+    <p>Last updated: <?php echo $data['datetime']; ?></p>
+    <table>
+        <thead>
+            <tr>
+                <th class="cell-header-style">Currency</th>
+                <th class="cell-header-style">Currency Name</th>
+                <th class="cell-header-style">Buy Rate</th>
+                <th class="cell-header-style">Tranfer</th>
+                <th class="cell-header-style">Sell Rate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($data['rates'] as $currency => $rate): ?>
+                <tr>
+                    <td class="cell-style"><?= $currency ?></td>
+                    <td class="cell-style"><?= $rate['name'] ?></td>
+                    <td class="cell-style"><?= $rate['buy'] ?></td>
+                    <td class="cell-style"><?= $rate['transfer'] ?></td>
+                    <td class="cell-style"><?= $rate['sell'] ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p>No exchange rates available.</p>
+<?php endif; ?>
+
+<style>
+
+    .cell-style{
+        border: 1px solid #000;
+        padding: 5px;
+        background-color: #f5f5f5;
+    }
+
+    .cell-header-style{
+        border: 1px solid #000;
+        padding: 5px;
+        background-color: #e0e0e0;
+    }
+
+</style>

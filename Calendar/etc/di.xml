@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Uet\Calendar\Controller\Action\Destroy">
+        <arguments>
+            <argument name="context" xsi:type="object">Magento\Backend\App\Action\Context</argument>
+            <argument name="calendarFactory" xsi:type="object">Uet\Calendar\Model\CalendarFactory</argument>
+            <argument name="messageManager" xsi:type="object">Magento\Framework\Message\ManagerInterface</argument>
+        </arguments>
+    </type>
+    <type name="Uet\Calendar\Controller\Action\Save">
+        <arguments>
+            <argument name="context" xsi:type="object">Magento\Backend\App\Action\Context</argument>
+            <argument name="calendarFactory" xsi:type="object">Uet\Calendar\Model\CalendarFactory</argument>
+            <argument name="messageManager" xsi:type="object">Magento\Framework\Message\ManagerInterface</argument>
+            <argument name="calendarResource" xsi:type="object">Uet\Calendar\Model\ResourceModel\Calendar</argument>
+        </arguments>
+    </type>
+</config>
