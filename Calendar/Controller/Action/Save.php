@@ -51,7 +51,7 @@ class Save extends Action
             $occasion->setData($getData);
             try {
                 $this->calendarResource->save($occasion);
-                $this->_eventManager->dispatch('calendar_after', ['occasion' => $occasion]);
+                //$this->_eventManager->dispatch('calendar_after', ['occasion' => $occasion]);
                 $this->messageManager->addSuccessMessage(__('Occasion saved successfully.'));
             } catch (\Exception $e) {
                 $this->messageManager->addErrorMessage(__('Error saving occasion.'));
