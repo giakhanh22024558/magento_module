@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Customer:etc/sections.xsd">
+    <action name="calendar/index/index/">
+        <section name="custom_section"/>
+    </action>
+    <action name="calendar/action/save">
+        <section name="custom_section"/>
+    </action>
+    <action name="calendar/action/destroy">
+        <section name="custom_section"/>
+    </action>
+</config>

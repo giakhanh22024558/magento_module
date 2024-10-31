@@ -9,6 +9,17 @@
         <referenceContainer name="sidebar.additional" remove="true"/>
         <referenceContainer name="content">
             <block type="core/template" class="Uet\Calendar\Block\Calendars" name="calendar" template="Uet_Calendar::calendar.phtml"/>
+            <!-- <block class="Magento\Framework\View\Element\Template" name="custom.section" template="Uet_Calendar::custom_section.phtml">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="customSection" xsi:type="array">
+                                <item name="component" xsi:type="string">Uet_Calendar/js/custom-section</item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block> -->
         </referenceContainer>
     </body>
 </page>

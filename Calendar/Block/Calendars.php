@@ -28,37 +28,37 @@ class Calendars extends Template
     public function getOccasions()
     {   
         $customerId = $this->getCustomerId();
-        //dd($this->customerSession->isLoggedIn());
+        //dd($customerId);
         $calendar = $this->calendarFactory->create();
         $collection = $calendar->getCollection();
         $collection->addFieldToFilter('customer_id', $customerId);
-        //dd($collection->getItems());
-        return $collection->getItems();
+        $occasions = [];
+        foreach ($collection->getItems() as $item) {
+            $occasions[] = [
+                'id' => $item->getId(),
+                'customer_id' => $item->getData('customer_id'),
+                'occasion' => $item->getData('occasion'),
+                'date' => $item->getData('date'),
+                'note' => $item->getData('note')
+            ];
+        }
+        //dd($occasions);
+        return $occasions;
     }
     
     public function getCategories()
     {
         // Load the parent category by name
         $parentCategory = $this->categoryFactory->create()->load(3);
-        //$parentCategory->loadByAttribute('name', 'occasions');
         $childCategories = $parentCategory->getChildrenCategories();
-        //$parentId = $parentCategory->getData('entity_id');
-
-        //dd($childCategories);
-
-        // Load child categories
+        
         $categoriesData = [];
         foreach ($childCategories as $category) {
-            // dd($category->getData('name'));
             $categoriesData[] = [
                 'id' => $category->getId(),
                 'name' => $category->getName(),
             ];
         }
-
-        //dd($categoriesData);
-
-        // dd($childCategories);
 
         return $categoriesData;
     }

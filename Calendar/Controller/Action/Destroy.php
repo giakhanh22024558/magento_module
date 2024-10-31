@@ -32,7 +32,7 @@ class Destroy extends Action
                 $occasion->load($occasionId);
                 if ($occasion->getData('id')) {
                     $occasion->delete();
-                    $this->_eventManager->dispatch('calendar_after', ['occasion' => $occasion]);
+                    //$this->_eventManager->dispatch('calendar_after', ['occasion' => $occasion]);
                     $this->messageManager->addSuccessMessage(__('Record deleted successfully.'));
                 } else {
                     $this->messageManager->addErrorMessage(__('Record does not exist.'));
