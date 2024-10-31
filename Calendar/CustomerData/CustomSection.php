@@ -17,7 +17,7 @@ class CustomSection implements SectionSourceInterface
         //dd($this->calendars->getOccasions());
     	return [
         	'occasions' => $this->calendars->getOccasions(),
-        	'categories' => $this->calendars->getCategories(),
+        	'customer_id' => $this->calendars->getCustomerId(),
     	];
 	}
 }
