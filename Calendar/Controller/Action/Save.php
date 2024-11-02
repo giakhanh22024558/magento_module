@@ -33,7 +33,7 @@ class Save extends Action
     public function execute()
     {
         $data = $this->getRequest()->getPostValue();
-        //dd($data);
+        $message = null;
         if ($data) {
             $occasionId = isset($data['id']) ? $data['id'] : null;
             if(!$occasionId) {
@@ -43,16 +43,17 @@ class Save extends Action
                     'note' => $data['note'] ?? null,
                     'date' => $data['date'] ?? null,
                 ];
+                $message = 'Occasion added successfully.';
             } else {
                 $getData = $data;
+                $message = 'Occasion updated successfully.';
             }
             $occasion = $this->calendarFactory->create();
-            // dd($getData);
             $occasion->setData($getData);
             try {
                 $this->calendarResource->save($occasion);
                 //$this->_eventManager->dispatch('calendar_after', ['occasion' => $occasion]);
-                $this->messageManager->addSuccessMessage(__('Occasion saved successfully.'));
+                $this->messageManager->addSuccessMessage(__($message));
             } catch (\Exception $e) {
                 $this->messageManager->addErrorMessage(__('Error saving occasion.'));
             }
@@ -60,6 +61,6 @@ class Save extends Action
             $this->messageManager->addErrorMessage(__('Invalid data.'));
         }
 
-        return $this->_redirect('calendar/index/index');
+        return;
     }
 }

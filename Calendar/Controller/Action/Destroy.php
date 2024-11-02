@@ -44,28 +44,7 @@ class Destroy extends Action
             $this->messageManager->addErrorMessage(__('Record ID is not specified.'));
         }
 
-        return $this->_redirect('calendar/index/index'); // Redirect to the index page
+        return; // Redirect to the index page
     }
 }
 
-//$occasionId = $this->getRequest()->getParam('id'); // Assuming the record ID is passed as a parameter
-
-        // if ($occasionId) {
-        //     try {
-        //         $occasion = $this->calendarFactory->create();
-        //         $occasion->load($occasionId);
-        //         if ($occasion->getData('id')) {
-        //             $occasion->delete();
-        //             $this->_eventManager->dispatch('calendar_after', ['occasion' => $occasion]);
-        //             $this->messageManager->addSuccessMessage(__('Record deleted successfully.'));
-        //         } else {
-        //             $this->messageManager->addErrorMessage(__('Record does not exist.'));
-        //         }
-        //     } catch (\Exception $e) {
-        //         $this->messageManager->addErrorMessage($e->getMessage());
-        //     }
-        // } else {
-        //     $this->messageManager->addErrorMessage(__('Record ID is not specified.'));
-        // }
-
-        // return $this->_redirect('calendar/index/index'); // Redirect to the index page

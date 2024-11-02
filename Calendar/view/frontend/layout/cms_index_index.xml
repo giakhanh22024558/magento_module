@@ -2,7 +2,6 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="content">
-            <block class="Magento\Framework\View\Element\Messages" name="messages" as="messages"/>
             <block class="Magento\Framework\View\Element\Html\Link" name="calendar_button">
                 <arguments>
                     <argument name="label" xsi:type="string">View Calendar</argument>
