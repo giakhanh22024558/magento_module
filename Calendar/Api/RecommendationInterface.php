@@ -1,5 +1,5 @@
 <?php
-namespace Uet\Recommendations\Api;
+namespace Uet\Calendar\Api;
 
 interface RecommendationInterface
 {

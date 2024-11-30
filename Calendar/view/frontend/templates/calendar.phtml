@@ -4,7 +4,8 @@
 $categories = $block->getCategories();
 ?>
 <h1>Occasions</h1>
-
+<div class="messages" id="alert-block" style="display: none; padding: 10px; margin-top: 10px; border-radius: 5px; color:white; font-weight: 600;">
+</div>
 <div class="grid-container">
     <div class="grid-column flex-column-gap" id="custom-section-container" 
         data-destroy-url="<?= $block->getUrl('calendar/action/destroy') ?>"
@@ -15,8 +16,9 @@ $categories = $block->getCategories();
 
     <div class="grid-column">
         <div id="mode-display">
-            <div style="display:flex; justify-content:end;">
-                <button type="button" onclick="changeMode()">Add mode</button>
+            <div style="display:flex; justify-content:space-between;">
+                <div>You are: <span id="mode-status">Adding an occasion</span></div>
+                <button id="add-mode" disabled="true" type="button" onclick="changeMode()">Add mode</button>
             </div>
         </div>
         <form class="form-style" id="add" action="<?= $block->getUrl('calendar/action/save') ?>" method="post">
@@ -88,6 +90,11 @@ $categories = $block->getCategories();
         background-color: lightgray;
     }
 
+    .highlight{
+        border: 2px solid black;
+        background-color: lightgray;
+    }
+
 </style>
 
 <script type="text/javascript">
@@ -110,6 +117,7 @@ $categories = $block->getCategories();
                     var li = document.createElement('div');
                     li.classList.add('grid-container');
                     li.classList.add('occasion-item');
+                    li.id = 'occasion-' + occasion.id;
                     li.innerHTML = 
                         '<div>' 
                             + '<span style="text-transform: uppercase; font-weight:bold;">' + occasion.occasion + '</span>' + 
@@ -132,15 +140,26 @@ $categories = $block->getCategories();
         $(document).on('submit', '#del', function (event) {
             event.preventDefault(); // Prevent the default form submission
             var form = $(this);
+
+            var occasionId = $('#occasion-id').val();
+
+            if (occasionId) {
+                $('#occasion-id').val('');
+                $('#add').find('input:not([type="hidden"])').val('');
+                $('#add').find('select').prop('selectedIndex', 0);
+            }
+
             $.ajax({
                 type: 'POST',
                 url: form.attr('action'),
                 data: form.serialize(),
                 success: function (response) {
-                    //console.log(response);
+                    console.log(response);
+                    showAlert(response.message, 'success');
                     removeMessage();
                 },
                 error: function () {
+                    showAlert(response.message, 'error');
                     console.log('Error del');
                 }
             });
@@ -149,28 +168,40 @@ $categories = $block->getCategories();
         $(document).on('submit', '#add', function (event) {
             event.preventDefault(); // Prevent the default form submission
             var form = $(this);
+
+            var occasionId = $('#occasion-id').val();
+
             $.ajax({
                 type: 'POST',
                 url: form.attr('action'),
                 data: form.serialize(),
                 success: function (response) {
-                    //console.log(response);
+                    changeMode();
+                    showAlert(response.message, 'success');
                     removeMessage();
                 },
                 error: function () {
+                    showAlert(response.message, 'error');
                     console.log('Error add');
                 }
             });
         });
 
         function removeMessage() {
-        setTimeout(function () {
-            $('.messages').fadeOut('slow', function () {
-                $(this).remove();
-            });
-        }, 3000); // 3 seconds
+            setTimeout(function () {
+                $('.messages').fadeOut('slow', function () {
+                    $(this).css('display', 'none');
+                });
+            }, 3000);
+        } // 3 seconds
 
-    }
+        function showAlert(message, type) {
+            var alertBlock = document.getElementById('alert-block');
+            alertBlock.style.display = 'block';
+            alertBlock.style.backgroundColor = type === 'error' ? 'red' : 'green';
+            alertBlock.innerHTML = message;
+            removeMessage();
+        }
 
     });
 
@@ -187,10 +218,28 @@ $categories = $block->getCategories();
         }
         document.getElementById('date').value = date;
         document.getElementById('note').value = note;
+
+        // Highlight the current div
+        var occasionItems = document.querySelectorAll('.occasion-item');
+        occasionItems.forEach(function(item) {
+            item.classList.remove('highlight'); // Remove highlight from all items
+        });
+        document.getElementById('occasion-' + id).classList.add('highlight'); // Add highlight to the current item
+
+        // Enable the "Add mode" button
+        document.getElementById('add-mode').disabled = false;
+        document.getElementById('mode-status').innerHTML = "Updating an occasion";
+
     }
 
     function changeMode(){
         
+        var occasionItems = document.querySelectorAll('.occasion-item');
+        occasionItems.forEach(function(item) {
+            item.classList.remove('highlight'); // Remove highlight from all items
+        });
+        document.getElementById('mode-status').innerHTML = "Adding an occasion";
+        document.getElementById('add-mode').disabled = true;
         document.getElementById('occasion-id').value = '';
         document.getElementById('date').value = '';
         document.getElementById('note').value = '';

@@ -8,6 +8,7 @@ use Uet\Calendar\Model\CalendarFactory;
 use Uet\Calendar\Model\ResourceModel\Calendar as CalendarResource;
 use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\Message\ManagerInterface;
+use Magento\Framework\Controller\Result\JsonFactory;
 
 class Save extends Action
 {
@@ -15,6 +16,7 @@ class Save extends Action
     protected $messageManager;
     protected $calendarResource;
     protected $customerSession;
+    protected $resultJsonFactory;
 
     public function __construct(
         Context $context,
@@ -22,18 +24,21 @@ class Save extends Action
         ManagerInterface $messageManager,
         CustomerSession $customerSession,
         CalendarResource $calendarResource,
+        JsonFactory $resultJsonFactory
     ) {
         parent::__construct($context);
         $this->customerSession = $customerSession;
         $this->calendarFactory = $calendarFactory;
         $this->messageManager = $messageManager;
         $this->calendarResource = $calendarResource;
+        $this->resultJsonFactory = $resultJsonFactory;
     }
 
     public function execute()
     {
         $data = $this->getRequest()->getPostValue();
         $message = null;
+
         if ($data) {
             $occasionId = isset($data['id']) ? $data['id'] : null;
             if(!$occasionId) {
@@ -53,14 +58,17 @@ class Save extends Action
             try {
                 $this->calendarResource->save($occasion);
                 //$this->_eventManager->dispatch('calendar_after', ['occasion' => $occasion]);
-                $this->messageManager->addSuccessMessage(__($message));
+                // $this->messageManager->addSuccessMessage(__($message));
             } catch (\Exception $e) {
-                $this->messageManager->addErrorMessage(__('Error saving occasion.'));
+                // $this->messageManager->addErrorMessage(__('Error saving occasion.'));
+                $message = $e->getMessage();
             }
         } else {
-            $this->messageManager->addErrorMessage(__('Invalid data.'));
+            // $this->messageManager->addErrorMessage(__('Invalid data.'));
+            $message = 'Invalid data.';
         }
 
-        return;
+        $result = $this->resultJsonFactory->create();
+        return $result->setData(['message' => $message]);
     }
 }
