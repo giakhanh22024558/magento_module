@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
-        <referenceContainer name="content">
-            <block class="Magento\Framework\View\Element\Html\Link" name="news_feed_button">
+        <referenceContainer name="catalog.topnav">
+            <block class="Magento\Framework\View\Element\Template" name="news_feed_button" template="Uet_CurrencyExchange::topmenu.phtml">
                 <arguments>
-                    <argument name="label" xsi:type="string">View News Feed</argument>
+                    <argument name="label" xsi:type="string">News Feed</argument>
                     <argument name="path" xsi:type="string">news/index/index</argument>
                 </arguments>
             </block>

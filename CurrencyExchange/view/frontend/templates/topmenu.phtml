@@ -1,0 +1,9 @@
+<?php
+$label = $block->getData('label');
+$path = $block->getData('path');
+?>
+<li class="level0 nav-1 first level-top">
+    <a href="<?php echo $block->getUrl($path); ?>" class="level-top">
+        <span><?php echo $label; ?></span>
+    </a>
+</li>
